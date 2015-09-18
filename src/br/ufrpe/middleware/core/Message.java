@@ -7,7 +7,8 @@ public class Message implements Serializable {
 	private int t;
 	private String op;
 	private int p1, p2;
-	private double r;
+	private String r;
+	private String erro;
 
 	public Message() {
 
@@ -32,17 +33,21 @@ public class Message implements Serializable {
 		return p2;
 	}
 	
-	public double getResult(){
+	public String getResult(){
 		return r;
 	}
 	
-	public void setResult(double r){
+	public void setResult(String r){
 		this.r = r;
 	}
-	@Override
-	public String toString() {
+	
+	public String getMsgError(){
+		return erro;
+	}
+	
+	public String setMsgError(String erro) {
 		
-		return op+p1+p2;
+		return this.erro = erro;
 	}
 
 }

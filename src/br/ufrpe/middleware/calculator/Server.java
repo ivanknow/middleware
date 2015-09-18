@@ -12,20 +12,25 @@ public class Server implements ICalculator{
 		
 	}
 	
-	public double add(int a, int b){
-		return a + b;
+	public String add(int a, int b){
+		return Double.toString(a + b);
 	}
 	
-	public double sub(int a, int b){
-		return a - b;
+	public String sub(int a, int b){
+		return Double.toString(a - b);
 	}
 	
-	public double mult(int a, int b){
-		return a * b;
+	public String mult(int a, int b){
+		return Double.toString(a * b);
 	}
 	
-	public double div(int a, int b){
-		return a / b;
+	public String div(int a, int b){
+		if(b == 0){
+			return "divisãoPorZero";
+		}else{
+			return Double.toString(a / b);
+		}
+		
 	}
 
 }

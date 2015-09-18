@@ -11,7 +11,7 @@ public class Client {
 		System.out.println("Resultado = " + stub.add(7, 3));
 		System.out.println("Resultado = " + stub.sub(7, 3));
 		System.out.println("Resultado = " + stub.mult(7, 3));
-		System.out.println("Resultado = " + stub.div(7, 3));
+		System.out.println("Resultado = " + stub.div(7, 0));
 		
 	}
 

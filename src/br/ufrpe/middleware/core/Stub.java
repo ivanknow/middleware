@@ -8,7 +8,7 @@ public class Stub implements ICalculator{
 	Message repMsg = new Message();
 
 	@Override
-	public double add(int a, int b) {
+	public String add(int a, int b) {
 		ORB middleware = new ORB();
 		reqMsg.setMessage(1, "add", a, b);
 		try {
@@ -21,7 +21,7 @@ public class Stub implements ICalculator{
 	}
 
 	@Override
-	public double sub(int a, int b) {
+	public String sub(int a, int b) {
 		ORB middleware = new ORB();
 		reqMsg.setMessage(1, "sub", a, b);
 		try {
@@ -34,7 +34,7 @@ public class Stub implements ICalculator{
 	}
 
 	@Override
-	public double mult(int a, int b) {
+	public String mult(int a, int b) {
 		ORB middleware = new ORB();
 		reqMsg.setMessage(1, "mult", a, b);
 		try {
@@ -47,7 +47,7 @@ public class Stub implements ICalculator{
 	}
 
 	@Override
-	public double div(int a, int b) {
+	public String div(int a, int b) {
 		ORB middleware = new ORB();
 		reqMsg.setMessage(1, "div", a, b);
 		try {
@@ -56,7 +56,12 @@ public class Stub implements ICalculator{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return repMsg.getResult();
+		if(repMsg.getMsgError().equalsIgnoreCase("Não dividirás por zero!")){
+			return repMsg.getMsgError();
+		}else{
+			return repMsg.getResult();
+		}
+		
 	}
 	
 	

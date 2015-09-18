@@ -11,7 +11,7 @@ public class Skeleton {
 		Server server = new Server();
 		
 		while (true) {
-			double r;
+			String r;
 			reqMsg = m.receiveAndReply();
 			
 			switch (reqMsg.getOperation()) {
@@ -32,9 +32,17 @@ public class Skeleton {
 				break;
 			case "div":
 				r = server.div(reqMsg.getP1(), reqMsg.getP2());
-				repMsg.setResult(r);
-				m.reply(repMsg);
-				break;	
+				if (r == "divisãoPorZero"){
+					repMsg.setMsgError("Não Dividirás por Zero!");
+					m.reply(repMsg);
+				}else{
+					repMsg.setMsgError("Sem exceção");
+					repMsg.setResult(r);
+					m.reply(repMsg);
+					
+				}
+				break;
+					
 
 			default:
 				break;

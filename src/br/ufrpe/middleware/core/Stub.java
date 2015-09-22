@@ -1,66 +1,81 @@
 package br.ufrpe.middleware.core;
 
+import java.util.UUID;
+
 import br.ufrpe.middleware.common.ICalculator;
 
-public class Stub implements ICalculator{
+public class Stub{
 	
 	Message reqMsg = new Message();
 	Message repMsg = new Message();
 
-	@Override
-	public String add(int a, int b) {
+	public String get(UUID id) throws Exception {
 		ORB middleware = new ORB();
-		reqMsg.setMessage(1, "add", a, b);
-		try {
-			repMsg = middleware.sendAndReceive(reqMsg);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		repMsg = middleware.requestAndReceive(id);
+		
 		return repMsg.getResult();
 	}
-
-	@Override
-	public String sub(int a, int b) {
+	
+	
+	public UUID add(int a, int b) {
+	UUID id = UUID.randomUUID();
 		ORB middleware = new ORB();
-		reqMsg.setMessage(1, "sub", a, b);
+		reqMsg.setMessage(id, "add", a, b);
 		try {
-			repMsg = middleware.sendAndReceive(reqMsg);
+			middleware.send(reqMsg);
+			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
-		return repMsg.getResult();
+		return id;
 	}
 
-	@Override
-	public String mult(int a, int b) {
+	
+	public UUID sub(int a, int b) {
+		
 		ORB middleware = new ORB();
-		reqMsg.setMessage(1, "mult", a, b);
+		UUID id = UUID.randomUUID();
+		reqMsg.setMessage(id, "sub", a, b);
 		try {
-			repMsg = middleware.sendAndReceive(reqMsg);
+			middleware.send(reqMsg);
+		
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
-		return repMsg.getResult();
+		return id;
+	
 	}
 
-	@Override
-	public String div(int a, int b) {
+	
+	public UUID  mult(int a, int b) {
 		ORB middleware = new ORB();
-		reqMsg.setMessage(1, "div", a, b);
+		UUID id = UUID.randomUUID();
+		reqMsg.setMessage(id, "mult", a, b);
 		try {
-			repMsg = middleware.sendAndReceive(reqMsg);
+			middleware.send(reqMsg);
+			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
-		if(repMsg.getMsgError().equalsIgnoreCase("Não dividirás por zero!")){
-			return repMsg.getMsgError();
-		}else{
-			return repMsg.getResult();
+		return id;
+	}
+
+	
+	public UUID div( int a, int b) {
+		ORB middleware = new ORB();
+		UUID id = UUID.randomUUID();
+		reqMsg.setMessage(id, "div", a, b);
+		try {
+			middleware.send(reqMsg);
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
 		}
+		return id;
 		
 	}
 	

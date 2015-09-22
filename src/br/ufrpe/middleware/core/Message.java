@@ -1,10 +1,11 @@
 package br.ufrpe.middleware.core;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Message implements Serializable {
 
-	private int t;
+	private UUID t;
 	private String op;
 	private int p1, p2;
 	private String r;
@@ -14,7 +15,7 @@ public class Message implements Serializable {
 
 	}
 
-	public void setMessage(int t, String op, int a, int b) {
+	public void setMessage(UUID t, String op, int a, int b) {
 		this.t = t;
 		this.op = op;
 		this.p1 = a;
@@ -49,5 +50,19 @@ public class Message implements Serializable {
 		
 		return this.erro = erro;
 	}
+
+	public UUID getT() {
+		return t;
+	}
+
+	public void setT(UUID t) {
+		this.t = t;
+	}
+
+	@Override
+	public String toString() {
+		return "Message [t=" + t + ", op=" + op + ", p1=" + p1 + ", p2=" + p2 + ", r=" + r + ", erro=" + erro + "]";
+	}
+	 
 
 }

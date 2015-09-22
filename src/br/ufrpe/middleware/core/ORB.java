@@ -4,8 +4,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.UUID;
 
-public class ORB implements IORB{
+public class ORB {
 	
 	private int port;
 	private String host;
@@ -17,8 +18,7 @@ public class ORB implements IORB{
 		this.host = "localhost";
 	}
 
-	@Override
-	public Message sendAndReceive(Message msg) throws Exception {
+	public void send(Message msg) throws Exception {
 
 			Socket clientSocket = null;
 			clientSocket = new Socket(host, port);
@@ -26,38 +26,54 @@ public class ORB implements IORB{
 			outToServer = new ObjectOutputStream(clientSocket.getOutputStream());
 		
 			outToServer.writeObject(msg);
-		
-			Message retorno = null;
-			ObjectInputStream inFromClient; 
-			inFromClient = new ObjectInputStream(clientSocket.getInputStream());
-			retorno= (Message) inFromClient.readObject();
 			clientSocket.close();
-			
-			return retorno;
+			Thread.sleep(20);
 	
 	}
 	
-	@Override
-	public Message receiveAndReply() throws Exception {
-		Message msg = null;
+	public Message requestAndReceive(UUID id) throws Exception {
+
+		Socket clientSocket = null;
+		clientSocket = new Socket(host, port);
+		ObjectOutputStream outToServer;
+		outToServer = new ObjectOutputStream(clientSocket.getOutputStream());
+	
+		outToServer.writeObject(id);
+	
+		Message retorno = null;
+		ObjectInputStream inFromClient; 
+		inFromClient = new ObjectInputStream(clientSocket.getInputStream());
+		retorno= (Message) inFromClient.readObject();
+		clientSocket.close();
+		Thread.sleep(2);
+		return retorno;
+
+}
+	public Object recive() throws Exception{
 		welcomeSocket = new ServerSocket(port);
 		connectionSocket = welcomeSocket.accept();
 		ObjectInputStream inFromClient; 
 		inFromClient = new ObjectInputStream(connectionSocket.getInputStream());
-		msg = (Message) inFromClient.readObject();
 		
+		Object o = inFromClient.readObject();
 		
-		return msg;
+		Thread.sleep(2);
+		if(o instanceof Message){
+		welcomeSocket.close();
+		connectionSocket.close();
+		Thread.sleep(2);
+		}
+		return o;
 		
 	}
 
-	@Override
-	public void reply(Message msg) throws Exception {
+		public void reply(Message msg) throws Exception {
 		
 		ObjectOutputStream saida = new ObjectOutputStream(connectionSocket.getOutputStream());
 		saida.writeObject(msg);
 		welcomeSocket.close();
 		connectionSocket.close();
+		Thread.sleep(2);
 	
 	}
 
